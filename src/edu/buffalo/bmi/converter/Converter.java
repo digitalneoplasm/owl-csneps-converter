@@ -62,6 +62,11 @@ public class Converter {
 			e.printStackTrace();
 		}
 
+		writer.println("(in-ns 'csneps.core.snuser)");
+		writer.println("(clearkb true)");
+		writer.println("(krnovice true)");
+		writer.println();
+		
 		FileReader cfreader = null;
 		try {
 			cfreader = new FileReader("res/caseframes.sneps");
