@@ -1,0 +1,9 @@
+(defineSlot objects :type Entity
+  :min 2 :negadjust none)
+
+(defineSlot combiner :type Entity
+  :min 1 :max 1)
+  
+(defineCaseframe 'Propositional '(combiner objects)
+  :fsymbols '(ObjectUnionOf ObjectSomeValuesFrom ObjectAllValuesFrom ObjectIntersectionOf)
+  :docstring "[objects] are combined by [combiner]")
