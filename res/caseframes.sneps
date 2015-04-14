@@ -1,9 +1,16 @@
 (defineSlot objects :type Entity
-  :min 2 :negadjust none)
+  :min 1 :negadjust none)
 
-(defineSlot combiner :type Entity
+(defineSlot operator :type Entity
   :min 1 :max 1)
+
+(defineSlot property :type Entity
+  :min 1 :max 1)  
   
-(defineCaseframe 'Propositional '(combiner objects)
-  :fsymbols '(ObjectUnionOf ObjectSomeValuesFrom ObjectAllValuesFrom ObjectIntersectionOf)
-  :docstring "[objects] are combined by [combiner]")
+(defineCaseframe 'Propositional '(operator objects)
+  :fsymbols '(ObjectUnionOf ObjectIntersectionOf)
+  :docstring "the [operator] of [objects]")
+  
+(defineCaseframe 'Propositional '(operator property objects)
+  :fsymbols '(ObjectSomeValuesFrom ObjectAllValuesFrom)
+  :docstring "[operator] from [objects] with [property]")
