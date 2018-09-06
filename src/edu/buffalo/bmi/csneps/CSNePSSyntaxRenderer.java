@@ -41,6 +41,7 @@ public class CSNePSSyntaxRenderer implements OWLObjectVisitor {
     private boolean writeEntitiesAsURIs = true;
     private OWLObject focusedObject;
     private boolean addMissingDeclarations = true;
+    private int uniqueId;
 
     /**
      * @param ontology
@@ -121,6 +122,36 @@ public class CSNePSSyntaxRenderer implements OWLObjectVisitor {
         write(">\"");
         writeCloseBracket();
         writeReturn();
+    }
+
+    protected void writeIsa() {
+	write("Isa");
+	writeSpace();
+    }
+
+    protected void writeArb() {
+	write("every");
+	writeSpace();
+    }
+
+    protected void writeArbIsa(OWLClassExpression subclass) {
+	writeOpenBracket();
+	writeArb();
+	write("x");
+	write(""+ ++uniqueId);
+	writeSpace();
+	writeOpenBracket();
+	writeIsa();
+	write("x" + uniqueId);
+	writeSpace();
+	subclass.accept(this);
+	writeCloseBracket();
+	writeCloseBracket();
+    }
+
+    protected void writeInd() {
+	write("exists");
+	writeSpace();
     }
 
     @SuppressWarnings("null")
@@ -768,9 +799,10 @@ public class CSNePSSyntaxRenderer implements OWLObjectVisitor {
 
     @Override
     public void visit(@Nonnull OWLSubClassOfAxiom axiom) {
-        writeAxiomStart(SUB_CLASS_OF, axiom);
-        axiom.getSubClass().accept(this);
-        writeSpace();
+	writeOpenBracket();
+	writeIsa(); 
+	writeArbIsa(axiom.getSubClass());
+	writeSpace();
         axiom.getSuperClass().accept(this);
         writeAxiomEnd();
     }
